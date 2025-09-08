@@ -5,7 +5,7 @@ export async function POST(req) {
   const { email, password, name } = body;
 
   try {
-    const res = await fetch('http://stepwise.rekkvps.online/api/collections/users/records', {
+    const res = await fetch(`${process.env.POCKETBASE_URL}/api/collections/users/records`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

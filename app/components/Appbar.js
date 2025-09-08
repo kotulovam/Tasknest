@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import UserActions from "./UserActions";
 
 export default function AppBar() {
-
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
@@ -19,8 +18,6 @@ export default function AppBar() {
         if (data.user) setUser(data.user)
       })
   }, [])
-
-
 
   const handleLogOut = async () => {
     await fetch("/api/auth/log-out", {
@@ -36,7 +33,6 @@ export default function AppBar() {
         <div className="text-xl font-semibold text-slate-100">
           TaskNest
         </div>
-
         {user ? (
           <>
             <div className="flex flex-col mt-0.5 items-center justify-center text-xs">
@@ -52,7 +48,6 @@ export default function AppBar() {
             )}
           </>
         ) : (<Link href="/log-in"><User size={24} /></Link>)}
-
       </div>
     </header>
   );

@@ -1,9 +1,9 @@
 import React from "react"
 
-const Meals = () => {
+export default function Meals() {
   return (
-    <div>Hi there from Meals page</div>
+    <div>The Meals page is currently in development.</div>
   )
 }
 
-export default Meals
+

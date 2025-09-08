@@ -2,16 +2,11 @@
 
 import React, { useEffect, useState } from "react"
 import { Star } from "lucide-react"
-import Checkbox from '@mui/material/Checkbox';
-import CheckIcon from '@mui/icons-material/Check';
+import CheckBoxes from "../components/CheckBoxes";
 
-
-const ToDo = () => {
+export default function ToDo() {
   const [todos, setTodos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-
-
-
 
   useEffect(() => {
     const loadTodos = async () => {
@@ -20,9 +15,8 @@ const ToDo = () => {
         const res = await fetch("/api/todos")
         const data = await res.json()
         setTodos(data.todos || [])
-
       } catch (err) {
-        console.log("Hups neco se nezdarilo", err)
+        console.log("Something went wrong.", err)
       } finally {
         setIsLoading(false)
       }
@@ -45,7 +39,13 @@ const ToDo = () => {
     }
   }
 
-
+  const sortTodos = (a, b) => {
+    if (a.isChecked !== b.isChecked) {
+      return a.isChecked ? 1 : -1;
+    }
+    if (a.isPriority === b.isPriority) return 0;
+    return a.isPriority ? -1 : 1;
+  };
 
   const handleStarClick = (id) => {
     const current = todos.find(todo => todo.id === id);
@@ -58,14 +58,9 @@ const ToDo = () => {
           : todo
       );
 
-      // Sort after toggling priority
-      return updated.sort((a, b) => {
-        if (a.isPriority === b.isPriority) return 0;
-        return a.isPriority ? -1 : 1; // true comes first
-      });
+      return updated.sort(sortTodos);
     });
     updateTodo(id, { isPriority: next })
-
   };
   ;
 
@@ -73,57 +68,38 @@ const ToDo = () => {
     const current = todos.find(todo => todo.id === id);
     const next = !current.isChecked;
 
-    setTodos(prevTodos => prevTodos.map(todo =>
-      todo.id === id ? { ...todo, isChecked: next } : todo
-    ))
-
+    setTodos(prevTodos => {
+      const updated = prevTodos.map(todo =>
+        todo.id === id ? { ...todo, isChecked: next } : todo
+      )
+      return updated.sort(sortTodos);
+    })
 
     updateTodo(id, { isChecked: next })
   }
 
   return (
     <div className="space-y-3">
-      {isLoading ? (<p>Loadím</p>) : (
+      {isLoading ? (<p>Loading...</p>) : (
         todos.length === 0 ? (
-          <p>Nic</p>
+          <p>No record of tasks.</p>
         ) : (
           todos.map((todo) => (
-            <div className="flex justify-between gap-5 items-center w-full h-10  bg-slate-800 hover:bg-slate-700 text-slate-100 font-light py-3 px-6 rounded-xl shadow border border-slate-400" key={todo.id}
+            <div className="flex justify-between gap-5 items-center w-full h-10 bg-slate-800 hover:bg-slate-700 text-slate-100 font-light py-3 px-6 rounded-xl shadow border border-slate-400" key={todo.id}
               onClick={() => handleTickClick(todo.id)} >
               <div className="flex justify-start items-center">
-                <Checkbox
-                  checked={todo.isChecked || false}
-                  onClick={(e) => e.stopPropagation()}
-                  onChange={() => handleTickClick(todo.id)}
-                  icon={ // when not checked
-                    <svg width="24" height="24" viewBox="0 0 24 24">
-                      <rect
-                        x="3"
-                        y="3"
-                        width="16"
-                        height="16"
-                        rx="4"
-                        ry="4"
-                        stroke="white"
-                        strokeWidth="2"
-                        fill="none"
-                      />
-                    </svg>
-                  }
-                  checkedIcon={<CheckIcon sx={{ color: '#9966CC' }} />} // when checked
-                />
+                <CheckBoxes checked={todo.isChecked} onClick={(e) => e.stopPropagation()} onChange={() => handleTickClick(todo.id)} />
                 {todo.name}
               </div>
               <Star
                 onClick={(e) => {
-                  e.stopPropagation(); // prevents tick toggle when clicking star
+                  e.stopPropagation();
                   handleStarClick(todo.id)
                 }}
                 size={20}
                 color={todo.isPriority ? "#FFD300" : "	#D3D3D333"}
                 fill={todo.isPriority ? "#FFD300" : "none"}
               />
-
             </div>
           ))
         )
@@ -132,4 +108,3 @@ const ToDo = () => {
   )
 }
 
-export default ToDo

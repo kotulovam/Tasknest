@@ -12,7 +12,7 @@ export async function GET() {
 
   try {
     const res = await fetch(
-      `${process.env.POCKETBASE_URL}/api/collections/todos/records?filter=user="${user.id}"&perPage=100`, {
+      `${process.env.POCKETBASE_URL}/api/collections/habits/records?filter=user="${user.id}"&perPage=100`, {
       headers: {
         Authorization: token
       }
@@ -23,7 +23,7 @@ export async function GET() {
     }
 
     const data = await res.json();
-    return NextResponse.json({ todos: data.items || [] });
+    return NextResponse.json({ habits: data.items || [] });
   } catch (err) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
@@ -32,7 +32,7 @@ export async function GET() {
 
 export async function POST(req) {
   const body = await req.json();
-  const { name, isChecked = false } = body;
+  const { name, isChecked = false, habitTime } = body;
 
   const cookieStore = await cookies();
   const session = cookieStore.get("pb_auth")
@@ -43,7 +43,7 @@ export async function POST(req) {
   }
 
   try {
-    const res = await fetch(`${process.env.POCKETBASE_URL}/api/collections/todos/records`, {
+    const res = await fetch(`${process.env.POCKETBASE_URL}/api/collections/habits/records`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -53,6 +53,7 @@ export async function POST(req) {
         name,
         isChecked,
         user: user.id,
+        habitTime,
       }),
     });
 

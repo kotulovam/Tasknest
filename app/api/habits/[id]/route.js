@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 export async function PATCH(req, { params }) {
   const { id } = params;
-  const { isPriority, isChecked, name } = await req.json();
+  const { isChecked, name, habitTime } = await req.json();
 
   const cookieStore = await cookies();
   const session = cookieStore.get("pb_auth")
@@ -15,13 +15,13 @@ export async function PATCH(req, { params }) {
   }
 
   const body = {}
-  if (typeof isPriority !== "undefined") body.isPriority = isPriority
   if (typeof isChecked !== "undefined") body.isChecked = isChecked
+  if (typeof habitTime !== "undefined") body.habitTime = habitTime
   if (typeof name !== "undefined") body.name = name
 
   try {
     const res = await fetch(
-      `${process.env.POCKETBASE_URL}/api/collections/todos/records/${id}`, {
+      `${process.env.POCKETBASE_URL}/api/collections/habits/records/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export async function PATCH(req, { params }) {
     }
 
     const data = await res.json();
-    return NextResponse.json({ todo: data });
+    return NextResponse.json({ habit: data });
   } catch {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }

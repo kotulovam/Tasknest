@@ -18,7 +18,7 @@ const App = () => {
       </div>
       <div className="w-[95%]">
         <ToDo />
-        {showModal && <AddItemModal setShowModal={setShowModal} />} </div>
+        {showModal && <AddItemModal setShowModal={setShowModal} itemName={"Task"} collection={"todos"} />} </div>
     </div>
   )
 }

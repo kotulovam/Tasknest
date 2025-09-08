@@ -8,7 +8,7 @@ export async function POST(req) {
   const { email, password } = await req.json();
 
   try {
-    const res = await fetch('http://stepwise.rekkvps.online/api/collections/users/auth-with-password', {
+    const res = await fetch(`${process.env.POCKETBASE_URL}/api/collections/users/auth-with-password`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ identity: email, password }),

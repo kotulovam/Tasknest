@@ -1,12 +1,9 @@
-import { User, CircleUser, Pencil, LogOut } from "lucide-react";
-import React, { useEffect, useState } from "react"
+import { CircleUser, Pencil, LogOut } from "lucide-react";
 
-export default function UserActions({ user, handleLogOut, showModal, setShowModal }) {
+export default function UserActions({ user, handleLogOut, setShowModal }) {
   return (
     <div className="fixed inset-0 z-50 backdrop-blur-sm flex items-center justify-center px-5">
       <div className="bg-[#1e293b] rounded-2xl shadow-lg w-full max-w-md px-8 py-6 relative animate-fadeIn">
-
-        {/* User Info */}
         <div className="flex justify-start items-center gap-4 mb-4">
           <CircleUser size={48} className="text-white" />
           <div>
@@ -14,8 +11,6 @@ export default function UserActions({ user, handleLogOut, showModal, setShowModa
             <div className="text-sm text-gray-400">{user.email}</div>
           </div>
         </div>
-
-        {/* Action Buttons */}
         <div className="flex justify-between gap-8 py-2">
           <button
             onClick={() => setShowModal(false)}
@@ -30,8 +25,6 @@ export default function UserActions({ user, handleLogOut, showModal, setShowModa
             <LogOut size={16} /> Log out
           </button>
         </div>
-
-        {/* Close Button */}
         <button
           onClick={() => setShowModal(false)}
           className="absolute top-3 right-3 text-gray-400 hover:text-gray-200 transition-colors"
@@ -40,6 +33,5 @@ export default function UserActions({ user, handleLogOut, showModal, setShowModa
         </button>
       </div>
     </div>
-
   )
 }

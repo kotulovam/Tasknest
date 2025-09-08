@@ -19,7 +19,6 @@ export default function LogIn() {
           Sign In
         </a>
       </div>
-
     </div>
   )
 }

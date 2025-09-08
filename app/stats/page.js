@@ -1,9 +1,8 @@
 import React from "react"
 
-const Analytics = () => {
+export default function Analytics() {
   return (
-    <div>Hi there from analytics page</div>
+    <div>The Analytics page is currently in development.</div>
   )
 }
 
-export default Analytics
