@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Star } from "lucide-react"
 
 export default function AddItemModal({ setShowModal, itemName, collection }) {
   const [name, setName] = useState("")
@@ -32,13 +33,26 @@ export default function AddItemModal({ setShowModal, itemName, collection }) {
         <div className="text-xl text-white text-left font-bold mb-4">New {itemName}</div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={`${itemName} name`}
-            className="w-full bg-[#0f172a] text-white text-md px-4 py-2 border border-gray-600 rounded-lg placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
-          />
+          <div className="flex gap-4">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={`${itemName} name`}
+              className="w-full bg-[#0f172a] text-white text-md px-4 py-2 border border-gray-600 rounded-lg placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+            />
+            <button
+              type="button"
+              onClick={collection === "todos" ? (e) => handlePrioritize(e) : () => setShowModal(false)}
+              className={`bg-[#0f172a] px-3 py-2 border border-gray-600 rounded-lg ${isPriority && "bg-slate-800 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"}`}>
+              {collection === "todos"
+                ? (isPriority ? (
+                  <Star size={20} color="#FFD300" fill="#FFD300" />) : (
+                  <Star size={20} color="#D3D3D333" fill="#334155" />
+                ))
+                : "Cancel"}
+            </button>
+          </div>
 
           {collection === "habits" && (
             <div className="relative">
@@ -62,23 +76,13 @@ export default function AddItemModal({ setShowModal, itemName, collection }) {
             </div>
           )}
 
-          <div className="flex flex-row justify-between gap-4 sm:gap-8 py-2 text-sm">
-            <button
-              type="button"
-              onClick={collection === "todos" ? (e) => handlePrioritize(e) : () => setShowModal(false)}
-              className={`flex flex-1 justify-center items-center gap-2 px-4 py-2 rounded-lg border border-slate-600 hover:bg-slate-600 transition-colors ${isPriority && "bg-yellow-400 hover:bg-yellow-300 text-slate-800 font-semibold"}`}>
-              {collection === "todos"
-                ? (isPriority ? "Prioritized" : "Prioritize")
-                : "Cancel"}
-            </button>
-
+          <div className="flex sm:justify-end py-2 text-sm">
             <button
               type="submit"
-              className="flex flex-1 justify-center items-center gap-2 px-4 py-2 font-bold text-white bg-purple-700 hover:bg-purple-600 rounded-lg border border-purple-700 transition colors">
+              className="flex flex-1 sm:max-w-[40%] justify-center items-center gap-2 px-4 py-2 font-bold text-white bg-purple-700 hover:bg-purple-600 rounded-lg border border-purple-700 transition-colors">
               Add
             </button>
           </div>
-
         </form>
 
         <button

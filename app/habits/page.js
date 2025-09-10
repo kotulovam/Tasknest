@@ -63,13 +63,15 @@ export default function Habits() {
 
   return (
     <div className="flex flex-col items-center space-y-3">
-      <div className="w-[95%] flex justify-end px-3">
-        <Pencil size={20} />
-
-      </div>
-      <div className="relative w-[95%]">
+      <div className="relative w-[95%] flex gap-4">
         <button onClick={() => { setShowModal(true) }} className="sticky w-full flex justify-center items-center gap-3 bg-purple-700 hover:bg-purple-600 text-slate-100 font-semibold py-3 px-6 rounded-xl shadow">
           <CirclePlus className="w-6 h-6" /> Add Habit
+        </button>
+        <button
+          onClick={() => setIsEditing(prev => !prev)}
+          className="sticky flex justify-center gap-3 items-center bg-purple-700 hover:bg-purple-600 text-slate-100 py-3 px-6 rounded-xl shadow"
+        >
+          <Pencil className="w-5 h-5" />
         </button>
       </div>
       {showModal && <AddItemModal setShowModal={setShowModal} itemName={"Habit"} collection={"habits"} />}

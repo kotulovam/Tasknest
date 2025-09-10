@@ -9,6 +9,7 @@ import UserActions from "./UserActions";
 export default function AppBar() {
   const [user, setUser] = useState(null);
   const [showModal, setShowModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -44,6 +45,7 @@ export default function AppBar() {
                 handleLogOut={handleLogOut}
                 showModal={showModal}
                 setShowModal={setShowModal}
+                setShowEditModal={setShowEditModal}
               />
             )}
           </>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react"
-import { Star } from "lucide-react"
+import { Star, Pencil } from "lucide-react"
 import CheckBoxes from "../components/CheckBoxes";
 
 export default function ToDo({ isEditing, openEdit }) {
@@ -89,11 +89,22 @@ export default function ToDo({ isEditing, openEdit }) {
             <div className="flex justify-between gap-5 items-center w-full h-10 bg-slate-800 hover:bg-slate-700 text-slate-100 font-light py-3 px-6 rounded-xl shadow border border-slate-400" key={todo.id}
               onClick={() => isEditing ? openEdit(todo) : handleTickClick(todo.id)} >
               <div className="flex justify-start items-center">
+
                 {!isEditing && (
                   <CheckBoxes checked={todo.isChecked} onClick={(e) => e.stopPropagation()} onChange={() => handleTickClick(todo.id)} />
                 )}
-                {todo.name}
+
+                {isEditing ? (
+                  <div className="flex items-center gap-4 px-3">
+                    <Pencil size={18} />
+                    {todo.name}
+                  </div>
+                ) : (
+                  todo.name
+                )}
+
               </div>
+
               {!isEditing && (
                 <Star
                   onClick={(e) => {

@@ -1,6 +1,6 @@
 import { CircleUser, Pencil, LogOut } from "lucide-react";
 
-export default function UserActions({ user, handleLogOut, setShowModal }) {
+export default function UserActions({ user, handleLogOut, setShowModal, setShowEditModal }) {
   return (
     <div className="fixed inset-0 z-10 flex justify-center items-center px-5 backdrop-blur">
       <div className="relative w-full max-w-md px-8 py-6 sm:px-8 sm:py-6 bg-[#1e293b] rounded-2xl shadow-lg">
@@ -17,7 +17,7 @@ export default function UserActions({ user, handleLogOut, setShowModal }) {
 
         <div className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-8 py-2">
           <button
-            onClick={() => setShowModal(false)}
+            onClick={() => setShowEditModal(true)}
             className="flex flex-1 justify-center items-center gap-2 px-4 py-2 text-sm rounded-lg border border-slate-600  hover:bg-slate-600 transition-colors">
             <Pencil size={16} /> Edit
           </button>

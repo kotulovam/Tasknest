@@ -2,7 +2,7 @@
 
 import React from "react"
 import { useState, useEffect } from "react"
-import { CirclePlus } from "lucide-react"
+import { CirclePlus, Pencil } from "lucide-react"
 import AddItemModal from "@/app/components/AddItemModal"
 import ToDo from "./todo-list/page"
 import EditModal from "./components/EditModal"
@@ -49,7 +49,7 @@ export default function App() {
         <div>Loading...</div>
       ) : (
         <>
-          <div className="relative w-[95%]">
+          <div className="relative w-[95%] flex gap-4">
             <button
               onClick={() => setShowModal(true)}
               className="sticky w-full flex justify-center gap-3 items-center bg-purple-700 hover:bg-purple-600 text-slate-100 font-semibold py-3 px-6 rounded-xl shadow"
@@ -57,9 +57,10 @@ export default function App() {
               <CirclePlus className="w-6 h-6" /> Add Task
             </button>
             <button
-              onClick={() => setIsEditing(v => !v)}
+              onClick={() => setIsEditing(prev => !prev)}
+              className="sticky flex justify-center gap-3 items-center bg-purple-700 hover:bg-purple-600 text-slate-100 py-3 px-6 rounded-xl shadow"
             >
-              Edit
+              <Pencil className="w-5 h-5" />
             </button>
           </div>
           <div className="w-[95%]">
