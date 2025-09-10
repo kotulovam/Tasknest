@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react"
 import { Star } from "lucide-react"
 import CheckBoxes from "../components/CheckBoxes";
 
-export default function ToDo() {
+export default function ToDo({ isEditing, openEdit }) {
   const [todos, setTodos] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+
 
   useEffect(() => {
     const loadTodos = async () => {
@@ -86,20 +87,24 @@ export default function ToDo() {
         ) : (
           todos.map((todo) => (
             <div className="flex justify-between gap-5 items-center w-full h-10 bg-slate-800 hover:bg-slate-700 text-slate-100 font-light py-3 px-6 rounded-xl shadow border border-slate-400" key={todo.id}
-              onClick={() => handleTickClick(todo.id)} >
+              onClick={() => isEditing ? openEdit(todo) : handleTickClick(todo.id)} >
               <div className="flex justify-start items-center">
-                <CheckBoxes checked={todo.isChecked} onClick={(e) => e.stopPropagation()} onChange={() => handleTickClick(todo.id)} />
+                {!isEditing && (
+                  <CheckBoxes checked={todo.isChecked} onClick={(e) => e.stopPropagation()} onChange={() => handleTickClick(todo.id)} />
+                )}
                 {todo.name}
               </div>
-              <Star
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleStarClick(todo.id)
-                }}
-                size={20}
-                color={todo.isPriority ? "#FFD300" : "	#D3D3D333"}
-                fill={todo.isPriority ? "#FFD300" : "none"}
-              />
+              {!isEditing && (
+                <Star
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleStarClick(todo.id)
+                  }}
+                  size={20}
+                  color={todo.isPriority ? "#FFD300" : "	#D3D3D333"}
+                  fill={todo.isPriority ? "#FFD300" : "none"}
+                />
+              )}
             </div>
           ))
         )

@@ -18,7 +18,7 @@ export default function UserActions({ user, handleLogOut, setShowModal }) {
         <div className="flex flex-col sm:flex-row justify-between gap-4 sm:gap-8 py-2">
           <button
             onClick={() => setShowModal(false)}
-            className="flex flex-1 justify-center items-center gap-2 px-4 py-2 text-sm rounded-lg border border-white hover:bg-slate-700 transition colors">
+            className="flex flex-1 justify-center items-center gap-2 px-4 py-2 text-sm rounded-lg border border-slate-600  hover:bg-slate-600 transition-colors">
             <Pencil size={16} /> Edit
           </button>
           <button
