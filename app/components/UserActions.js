@@ -11,7 +11,7 @@ export default function UserActions({ user, handleLogOut, setShowModal }) {
           </div>
           <div className="text-base text-center sm:text-left sm:text-lg font-semibold">
             <div>{user.name}</div>
-            <div className="text-sm text-gray-400">{user.email}</div>
+            <div className="text-sm text-slate-400">{user.email}</div>
           </div>
         </div>
 

@@ -42,7 +42,7 @@ export default function SignIn() {
             <input
               type="email"
               name="email"
-              placeholder="milo@gmail.com"
+              placeholder="example@gmail.com"
               onChange={handleChange}
               required
               className="w-full rounded-lg bg-[#0f172a] text-white px-4 py-2 border border-gray-600 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"

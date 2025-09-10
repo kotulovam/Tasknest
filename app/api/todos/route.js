@@ -32,7 +32,7 @@ export async function GET() {
 
 export async function POST(req) {
   const body = await req.json();
-  const { name, isChecked = false } = body;
+  const { name, isChecked = false, isPriority } = body;
 
   const cookieStore = await cookies();
   const session = cookieStore.get("pb_auth")
@@ -52,6 +52,7 @@ export async function POST(req) {
       body: JSON.stringify({
         name,
         isChecked,
+        isPriority,
         user: user.id,
       }),
     });
