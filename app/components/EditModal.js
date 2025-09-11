@@ -3,20 +3,24 @@
 import React, { useState } from "react";
 import { Star } from "lucide-react";
 
-export default function EditModal({ setShowEditModal, todo, itemName, collection }) {
-  const [name, setName] = useState(todo?.name ?? "")
-  // const [habitTime, setHabitTime] = useState("")
+export default function EditModal({ setShowEditModal, todo, habit, itemName, collection }) {
+
+  const [name, setName] = useState(
+    collection === "todos" ? todo?.name ?? "" : habit?.name ?? ""
+  );
+  const [habitTime, setHabitTime] = useState(habit?.habitTime ?? "")
   const [isPriority, setIsPriority] = useState(!!todo?.isPriority)
 
   const handleEdit = async (e) => {
     e.preventDefault()
     try {
-      const res = await fetch(`/api/${collection}/${todo.id}`, {
+      const id = collection === "todos" ? todo?.id : habit?.id;
+      const res = await fetch(`/api/${collection}/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ name, isPriority })
+        body: JSON.stringify({ name, isPriority, habitTime })
       })
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -55,6 +59,10 @@ export default function EditModal({ setShowEditModal, todo, itemName, collection
     setIsPriority(!isPriority);
   }
 
+  const handleTimeSelect = (e) => {
+    setHabitTime(e.target.value)
+  }
+
   return (
     <div className="fixed inset-0 z-10 flex justify-center items-center px-5 backdrop-blur">
       <div className="relative w-full max-w-md px-8 py-6 sm:px-8 sm:py-6 bg-[#1e293b] rounded-2xl shadow-lg">
@@ -82,7 +90,7 @@ export default function EditModal({ setShowEditModal, todo, itemName, collection
             </button>
           </div>
 
-          {/* {collection === "habits" && (
+          {collection === "habits" && (
             <div className="relative">
               <select
                 value={habitTime}
@@ -102,7 +110,7 @@ export default function EditModal({ setShowEditModal, todo, itemName, collection
                 </svg>
               </div>
             </div>
-          )} */}
+          )}
 
           <div className="flex flex-row justify-between gap-4 sm:gap-8 py-2 text-sm">
             <button

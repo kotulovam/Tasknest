@@ -40,3 +40,33 @@ export async function PATCH(req, { params }) {
     return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
+
+export async function DELETE(req, { params }) {
+  const { id } = params;
+  const cookieStore = await cookies();
+  const session = cookieStore.get("pb_auth")
+  const { token, user } = JSON.parse(session?.value || '{}');
+
+  if (!token || !user?.id) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const res = await fetch(
+      `${process.env.POCKETBASE_URL}/api/collections/habits/records/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: token
+      }
+    })
+    if (!res.ok) {
+      const error = await res.json();
+      return NextResponse.json({ error }, { status: res.status });
+    }
+
+    const data = await res.json();
+    return NextResponse.json({ todo: data });
+  } catch {
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
+  }
+}

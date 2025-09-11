@@ -5,11 +5,15 @@ import { useState, useEffect } from "react"
 import { CirclePlus, Pencil } from "lucide-react";
 import Habit from "../components/Habit";
 import AddItemModal from "../components/AddItemModal";
+import EditModal from "../components/EditModal";
 
 export default function Habits() {
   const [habits, setHabits] = useState([])
   const [showModal, setShowModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
+  const [isEditing, setIsEditing] = useState(false)
+  const [currentHabit, setCurrentHabit] = useState(null)
 
   useEffect(() => {
     const loadHabits = async () => {
@@ -61,6 +65,11 @@ export default function Habits() {
     updateHabit(id, { isChecked: next })
   }
 
+  const openEdit = (habit) => {
+    setCurrentHabit(habit)
+    setShowEditModal(true)
+  }
+
   return (
     <div className="flex flex-col items-center space-y-3">
       <div className="relative w-[95%] flex gap-4">
@@ -79,8 +88,21 @@ export default function Habits() {
         {isLoading ? (<p>Loading...</p>) : (
           habits.length === 0 ? (
             <p>No record of habits.</p>
-          ) : (<Habit habits={habits} setHabits={setHabits} handleTickClick={handleTickClick} />))
-        }
+          ) : (
+            <>
+              <Habit habits={habits} setHabits={setHabits} handleTickClick={handleTickClick} isEditing={isEditing} openEdit={openEdit} />
+              {showEditModal && (
+                <EditModal
+                  setShowEditModal={setShowEditModal}
+                  habit={currentHabit}
+                  itemName={"Habit"}
+                  collection={"habits"}
+                />
+              )}
+            </>
+          )
+
+        )}
       </div>
     </div>)
 }
