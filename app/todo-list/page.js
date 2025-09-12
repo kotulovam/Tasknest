@@ -93,11 +93,11 @@ export default function ToDo({ isEditing, openEdit }) {
               <div className="flex items-center w-full">
                 {isEditing ? (
                   <div className="flex justify-between w-full items-center">
-                    <span>{todo.name}</span>
+                    <span className="px-3" >{todo.name}</span>
                     <Pencil size={18} />
                   </div>
                 ) : (
-                  <div className="flex justify-between w-full items-center">
+                  <div className="flex justify-start w-full items-center">
                     <CheckBoxes checked={todo.isChecked} onClick={(e) => e.stopPropagation()} onChange={() => handleTickClick(todo.id)} />
                     <span>{todo.name}</span>
                   </div>

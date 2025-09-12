@@ -16,7 +16,7 @@ export default function Habit({ habits, handleTickClick, isEditing, openEdit }) 
           <div className="flex items-center w-full">
             {isEditing ? (
               <div className="flex justify-between w-full items-center">
-                <span>{habit.name}</span>
+                <span className="px-3">{habit.name}</span>
                 <Pencil size={18} />
               </div>
             ) : (

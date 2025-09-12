@@ -33,25 +33,27 @@ export default function AddItemModal({ setShowModal, itemName, collection }) {
         <div className="text-xl text-white text-left font-bold mb-4">New {itemName}</div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex gap-4">
+          <div className="relative w-full">
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder={`${itemName} name`}
-              className="w-full bg-[#0f172a] text-white text-md px-4 py-2 border border-gray-600 rounded-lg placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
+              className="w-full bg-[#0f172a] text-white text-md px-4 py-2 pr-10 border border-gray-600 rounded-lg placeholder-gray-400 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
             />
-            <button
-              type="button"
-              onClick={collection === "todos" ? (e) => handlePrioritize(e) : () => setShowModal(false)}
-              className={`bg-[#0f172a] px-3 py-2 border border-gray-600 rounded-lg ${isPriority && "bg-slate-800 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"}`}>
-              {collection === "todos"
-                ? (isPriority ? (
-                  <Star size={20} color="#FFD300" fill="#FFD300" />) : (
+            {collection === "todos" && (
+              <button
+                type="button"
+                onClick={(e) => handlePrioritize(e)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 px-1 py-1"
+              >
+                {isPriority ? (
+                  <Star size={20} color="#FFD300" fill="#FFD300" />
+                ) : (
                   <Star size={20} color="#D3D3D333" fill="#334155" />
-                ))
-                : "Cancel"}
-            </button>
+                )}
+              </button>
+            )}
           </div>
 
           {collection === "habits" && (
@@ -91,8 +93,8 @@ export default function AddItemModal({ setShowModal, itemName, collection }) {
           ✕
         </button>
 
-      </div>
-    </div>
+      </div >
+    </div >
 
 
   )
