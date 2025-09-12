@@ -112,7 +112,7 @@ export default function EditModal({ setShowEditModal, todo, habit, itemName, col
             </div>
           )}
 
-          <div className="flex flex-row justify-between gap-4 sm:gap-8 py-2 text-sm">
+          <div className="flex flex-col-reverse sm:flex-row justify-between gap-3 sm:gap-8 py-2 text-sm">
             <button
               type="button"
               onClick={handleDelete}

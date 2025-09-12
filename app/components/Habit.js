@@ -13,26 +13,20 @@ export default function Habit({ habits, handleTickClick, isEditing, openEdit }) 
           className="flex justify-between gap-5 items-center w-full h-10 bg-slate-800 hover:bg-slate-700 text-slate-100 font-light py-3 px-6 rounded-xl shadow border border-slate-400"
           key={habit.id}
         >
-          <div className="flex justify-start items-center">
-
-            {!isEditing && (
-              <CheckBoxes
-                checked={habit.isChecked}
-                onChange={() => handleTickClick(habit.id)}
-              />
-            )}
-
+          <div className="flex items-center w-full">
             {isEditing ? (
-              <div className="flex items-center gap-4 px-3">
+              <div className="flex justify-between w-full items-center">
+                <span>{habit.name}</span>
                 <Pencil size={18} />
-                {habit.name}
               </div>
             ) : (
-              habit.name
+              <div className="flex justify-start w-full items-center">
+                <CheckBoxes checked={habit.isChecked}
+                  onChange={() => handleTickClick(habit.id)} />
+                <span>{habit.name}</span>
+              </div>
             )}
-
           </div>
-
 
           {!isEditing && (
             <div>
